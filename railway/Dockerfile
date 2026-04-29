@@ -4,7 +4,7 @@
 
 # This image is also based on frappe/bench which we use for production
 # https://github.com/pipech/erpnext-docker-debian/blob/master/Dockerfile
-FROM pipech/erpnext-docker-debian:version-15-latest AS builder
+FROM pipech/erpnext-docker-debian:version-16-latest AS builder
 
 # These variable has been set from base image
 # $systemUser, $benchFolderName
@@ -17,8 +17,10 @@ RUN echo "-> Start builder" \
     ### [HOTFIX] Railway used IPv6 (Does not support IPv4),  https://docs.railway.com/guides/private-networking#caveats
     ### https://github.com/frappe/frappe/issues/33981
     && sed -i 's/socket\.AF_INET, socket\.SOCK_STREAM/socket.AF_INET6, socket.SOCK_STREAM/g' /home/frappe/bench/apps/frappe/frappe/utils/connections.py \
-    ### install your custom apps here
-    # && bench get-app https://github.com/your-repo/custom_app
+    ### Install HRMS v16 (baked into image to prevent "Module HR not found" on restart)
+    && bench get-app hrms https://github.com/frappe/hrms --branch version-16 \
+    ### Install custom AI Talent Sourcing app
+    && bench get-app ai_talent_sourcing https://github.com/bfm92485/ai-talent-sourcing-app --branch main \
     && echo "-> Builder done!"
 
 
