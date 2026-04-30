@@ -31,7 +31,7 @@ RUN echo "-> Start builder" \
 # Image version should also match with stage 01
 # (Check pipech/erpnext-docker-debian Dockerfile)
 # https://github.com/frappe/frappe_docker/blob/main/images/bench/Dockerfile
-FROM frappe/bench:v5.22.9
+FROM frappe/bench:v5.29.0
 
 # this env should match stage 01
 # (Check pipech/erpnext-docker-debian Dockerfile)
